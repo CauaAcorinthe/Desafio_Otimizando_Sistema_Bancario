@@ -5,6 +5,7 @@ menu = """
 [e] Extrato
 [u] Criar Usuário
 [c] Criar Conta
+[lc] Listar Contas
 [q] Sair
 
 => """
@@ -48,25 +49,22 @@ def saque(*, valor, saldo, limite, extrato, LIMITE_SAQUES, numero_saques):
         
     return saldo, extrato, numero_saques
 
-def filtro_usuario(cpf, usuarios):
-    for usuario in usuarios: 
-        if usuario.get("cpf") == int(cpf):
-            print("Você não pode criar outro usuário com o mesmo CPF!! ")
-            return True
-        else:
-            return False
+def filtro_usuario(cpf,usuarios):
+    usuarios_filtrados = [usuario for usuario in usuarios if usuario["CPF"] == cpf]
+    return usuarios_filtrados[0] if usuarios_filtrados else None
         
         
         
-        
-def criar_usuario():
+def criar_usuario(usuarios):
+    cpf = input("Digite seu CPF: ")
+    usuario = filtro_usuario(cpf,usuarios)
+    if usuario:
+        print("\n Já existe um Usuário com esse CPF!")
+        return
     
-    
+
     nome = input("Digite o seu nome:")
     data_nascimento = input("Digite sua data de nascimento:")
-    cpf = int(input("Digite seu CPF: "))
-    if filtro_usuario(cpf, usuarios):
-        return
     
     endereco = {}
     endereco["logradouro"] = input("Digite seu logradouro: ")
@@ -75,19 +73,12 @@ def criar_usuario():
     endereco["cidade/estado"] = input("Digite sua cidade e a sigla do estado: ")
     print("=====Seu usuario foi criado=====")
     
-    usuario = {
-        "nome" : nome, 
-        "data_nascimento" : data_nascimento, 
-        "cpf" : cpf, 
-        "endereco" : endereco,
-    }
-    
-    usuarios.update(usuario)
+    usuarios.append({"Nome": nome, "data_nascimento": data_nascimento, "CPF": cpf, "Endereço": endereco})
     return usuarios
     
     
-contas = {}
-usuarios = {}
+contas = []
+usuarios = []
 saldo = 0
 limite = 500
 extrato = ""
@@ -111,7 +102,7 @@ while True:
         ver_extrato(saldo, extrato= extrato)
 
     elif opcao == "u":
-        usuarios = criar_usuario()
+        criar_usuario(usuarios)
            
     elif opcao == "q":
         break
