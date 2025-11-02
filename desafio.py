@@ -76,7 +76,26 @@ def criar_usuario(usuarios):
     usuarios.append({"Nome": nome, "data_nascimento": data_nascimento, "CPF": cpf, "Endereço": endereco})
     return usuarios
     
+def criar_conta(contas, usuarios, num_contas, AGENCIA):
+    cpf = input("Digite seu CPF: ")
+    usuario = filtro_usuario(cpf, usuarios)
     
+    if usuario:
+        num_contas += 1
+        numero_da_conta = num_contas
+        usuario = usuario["Nome"]
+        contas = {
+                  "Numero_da_conta": numero_da_conta,
+                  "Agencia": AGENCIA,
+                  "Usuario": usuario }
+        
+    else:
+        print("Nenhum usuário encontrado com esse CPF!!")
+    return num_contas, contas
+                
+    
+
+num_contas = 0
 contas = []
 usuarios = []
 saldo = 0
@@ -84,6 +103,7 @@ limite = 500
 extrato = ""
 numero_saques = 0
 LIMITE_SAQUES = 3
+AGENCIA = "0001"
 
 while True:
 
@@ -103,6 +123,9 @@ while True:
 
     elif opcao == "u":
         criar_usuario(usuarios)
+        
+    elif opcao == "c":
+        contas = criar_conta(contas, usuarios, num_contas, AGENCIA)
            
     elif opcao == "q":
         break
