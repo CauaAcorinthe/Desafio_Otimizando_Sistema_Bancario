@@ -57,11 +57,11 @@ O projeto foi construído de forma modular, utilizando funções para organizar 
 
 1. **Clone o repositório:**
    ```bash
-   git clone https://github.com/CauaAcorinthe/sistema-bancario-python-dio.git
+   git clone https://github.com/CauaAcorinthe/Desafio_DIO_Sistema_Bancario.git
 
 2. **Entre na pasta do projeto:**
    ```bash
-   cd sistema-bancario-python-dio
+   cd Desafio_DIO_Sistema_Bancario.git
 3. **Execute o código:**
    ```bash
    python desafio.py
